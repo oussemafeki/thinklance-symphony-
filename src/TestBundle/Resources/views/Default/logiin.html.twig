@@ -1,0 +1,89 @@
+
+                <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                                        <a href="{{ path('fos_user_security_logout') }}">
+                                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                                    {% endif %}
+                                </div>
+
+                                {% if app.request.hasPreviousSession %}
+                                    {% for type, messages in app.session.flashbag.all() %}
+                                        {% for message in messages %}
+                                            <div class="flash-{{ type }}">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                <div>
+                                    {% block fos_user_content %}
+                                    {% endblock fos_user_content %}
+                                </div>
+                                {#            <div class="login px-sm-4 mx-auto mw-100">
+                                                <h5 class="text-center mb-4">Login Now</h5>
+                                                <form action="#" method="post">
+                                                    <div class="form-group">
+                                                        <label>Your Name</label>
+                                                        <input type="text" class="form-control" name="name" placeholder="" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="mb-2">Password</label>
+                                                        <input type="password" class="form-control" name="password" placeholder="" required="">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary submit mb-4">Login</button>
+                                                    <p class="text-center pb-4">
+                                                        <a href="#">Forgot your password?</a>
+
+                                                    </p>
+                                                    <p class="text-center pb-4 create-w3ls">
+                                                        Don't have an account?
+                                                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter2">Create one now</a>
+                                                    </p>
+                                                </form>
+                                            </div>#}
+
+
+                                <div>
+                                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                                        <a href="{{ path('fos_user_security_logout') }}">
+
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ path('fos_user_security_login') }}"></a>
+                                    {% endif %}
+                                </div>
+                                {% if app.request.hasPreviousSession %}
+                                    {% for type, messages in app.session.flashbag.all() %}
+                                        {% for message in messages %}
+                                            <div class="flash-{{ type }}">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                <div>
+                                    {% block fos_user_content %}
+                                        {{ include('@FOSUser/Security/login_content.html.twig') }}
+                                    {% endblock fos_user_content %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
